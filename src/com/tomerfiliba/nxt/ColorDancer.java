@@ -10,14 +10,11 @@ import lejos.nxt.LCD;
 import lejos.nxt.comm.RConsole;
 import lejos.robotics.Color;
 
-
-public class ColorDancer 
-{
+public class ColorDancer {
 	Robot robot = new Robot();
 	Moves moves = new Moves(robot);
 
-    protected List<DanceMove> readMoves(int motorSpeed)
-    {
+	protected List<DanceMove> readMoves(int motorSpeed) {
 		ArrayList<DanceMove> moveList = new ArrayList<DanceMove>();
 		Boolean ready = true;
 		String curr = "";
@@ -28,22 +25,21 @@ public class ColorDancer
 		robot.motorL.setPower(motorSpeed);
 		robot.motorR.forward();
 		robot.motorL.forward();
-		
+
 		while (!Button.ESCAPE.isDown()) {
 			int level = robot.lightSensor.readValue();
 			int color = robot.colorSensor.getColor().getColor();
-	        LCD.clear();
+			LCD.clear();
 			LCD.drawInt(color, 3, 0, 0);
 
 			if (level >= 58) {
 				robot.motorR.setPower(motorSpeed * 2);
 				robot.motorL.setPower(motorSpeed);
-			}
-			else {
+			} else {
 				robot.motorR.setPower(motorSpeed);
 				robot.motorL.setPower(motorSpeed * 2);
 			}
-			
+
 			if (color == Color.BLACK) {
 				break;
 			}
@@ -72,12 +68,12 @@ public class ColorDancer
 				/* ignore all other colors */
 				continue;
 			}
-			
+
 			ready = false;
 			if (curr.length() < 2) {
 				continue;
 			}
-			
+
 			RConsole.println("Detected " + curr);
 			DanceMove m = moves.codesToMoves.get(curr);
 			curr = "";
@@ -92,40 +88,38 @@ public class ColorDancer
 		robot.motorL.stop();
 		robot.colorSensor.setFloodlight(Color.NONE);
 		robot.lightSensor.setFloodlight(false);
-		
+
 		return moveList;
-    }
-    
-    protected void doDance(List<DanceMove> danceMoves) throws Exception
-    {
+	}
+
+	protected void doDance(List<DanceMove> danceMoves) throws Exception {
 		robot.motorR.setPower(60);
 		robot.motorL.setPower(60);
-    	
+
 		LCD.clear();
-    	LCD.drawString("Let's dance!", 0, 0);
-    	for (DanceMove m : danceMoves) {
-        	LCD.drawString(m.toString(), 0, 1);
-    		RConsole.println(m.toString());
-    		m.move();
+		LCD.drawString("Let's dance!", 0, 0);
+		for (DanceMove m : danceMoves) {
+			LCD.drawString(m.toString(), 0, 1);
+			RConsole.println(m.toString());
+			m.move();
 			Thread.sleep(1000);
-    	}
-    	LCD.drawString("Done", 0, 1);
-    	robot.motorR.stop();
-    	robot.motorL.stop();
-    }
-    
-	public static void main(String [] args) throws Exception
-    {
+		}
+		LCD.drawString("Done", 0, 1);
+		robot.motorR.stop();
+		robot.motorL.stop();
+	}
+
+	public static void main(String[] args) throws Exception {
 		RConsole.openAny(3000);
-    	(new ColorDancer()).run();
+		(new ColorDancer()).run();
 		LCD.drawString("ESC..", 11, 7);
 		RConsole.close();
-		while (!Button.ESCAPE.isDown()) {};
+		while (!Button.ESCAPE.isDown()) {
+		}
 	}
-	
-	void run() throws Exception
-	{
-    	List<DanceMove> danceMoves = readMoves(10);
+
+	void run() throws Exception {
+		List<DanceMove> danceMoves = readMoves(10);
 		LCD.drawString("Got " + danceMoves.size() + " moves", 0, 1);
 		Thread.sleep(1000);
 		LCD.drawString("Waiting for music", 0, 2);
