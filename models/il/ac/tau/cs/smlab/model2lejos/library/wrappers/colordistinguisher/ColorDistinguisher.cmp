@@ -1,0 +1,8 @@
+package il.ac.tau.cs.smlab.model2lejos.library.wrappers.colordistinguisher;
+import lejos.nxt.ColorSensor.Color;
+
+
+component ColorDistinguisher[lejos.nxt.SensorPort sensorPort] {
+    port
+        out Integer colorValue;
+}

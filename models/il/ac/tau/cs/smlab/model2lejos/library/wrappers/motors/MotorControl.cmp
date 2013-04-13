@@ -1,0 +1,10 @@
+package il.ac.tau.cs.smlab.model2lejos.library.wrappers.motors;
+
+/**
+* Component ColorDistinguisher, used to evaluate a color value set on the inport 'color'
+*/
+component MotorControl[lejos.nxt.MotorPort motorPort] {
+    port
+        in Integer power,
+        in MotorDirection direction;
+}

@@ -1,0 +1,42 @@
+package Travolta;
+
+import il.ac.tau.cs.smlab.model2lejos.library.wrappers.buttons.Button;
+import il.ac.tau.cs.smlab.model2lejos.library.components.systemexit.SystemExit;
+import il.ac.tau.cs.smlab.model2lejos.library.wrappers.soundlevel.SoundLevel;
+import il.ac.tau.cs.smlab.model2lejos.library.wrappers.lightlevel.LightLevel;
+import il.ac.tau.cs.smlab.model2lejos.library.wrappers.colordistinguisher.ColorDistinguisher;
+import il.ac.tau.cs.smlab.model2lejos.library.wrappers.motors.MotorControl;
+import il.ac.tau.cs.smlab.model2lejos.library.wrappers.motors.MotorDirection;
+import lejos.nxt.MotorPort;
+import lejos.nxt.SensorPort;
+
+
+<<Deploy>> component Travolta {
+	port
+		out Integer powerR,
+		out Integer powerL,
+		out MotorDirection dirR,
+		out MotorDirection dirL,
+		in Integer lightVal,
+		in Integer soundVal,
+		in Integer colorVal;
+	
+	component Button(lejos.nxt.Button.ID_ESCAPE) escButton;
+	component SystemExit                         system;
+	component MotorControl(MotorPort.B)          motorR;
+	component MotorControl(MotorPort.C)          motorL;
+	component ColorDistinguisher(SensorPort.S3)  colorSensor;
+	component LightLevel(SensorPort.S4)          lightLevel;
+	component SoundLevel(SensorPort.S1)          soundLevel;
+
+	connect escButton.isPressed -> system.bExitSystem;
+	connect dirR -> motorR.direction;
+	connect powerR -> motorR.power;
+	connect dirL -> motorL.direction;
+	connect powerL -> motorL.power;
+	connect colorSensor.colorValue -> colorVal;
+	connect lightLevel.lightLevel -> lightVal;
+	connect soundLevel.soundLevel -> soundVal;
+
+}
+

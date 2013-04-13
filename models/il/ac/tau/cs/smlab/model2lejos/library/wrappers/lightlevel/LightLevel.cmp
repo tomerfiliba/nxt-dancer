@@ -1,0 +1,7 @@
+package il.ac.tau.cs.smlab.model2lejos.library.wrappers.lightlevel;
+
+component LightLevel[lejos.nxt.SensorPort sensorPort] {
+    port
+    	out Integer lightLevel;
+       
+}

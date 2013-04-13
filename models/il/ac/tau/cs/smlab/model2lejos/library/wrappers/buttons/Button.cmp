@@ -1,0 +1,8 @@
+package il.ac.tau.cs.smlab.model2lejos.library.wrappers.buttons;
+
+component Button[Integer buttonNr] {
+	 
+    port
+    	out Boolean isPressed;
+       
+}
